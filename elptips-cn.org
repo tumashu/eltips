@@ -1,82 +1,88 @@
 #+TITLE: Emacs-lisp Packaging Tips
-* Ë­Ó¦¸Ã¶ÁÕâ¸öÎÄµµ
-¸Õ¸Õ´ÓÐ´ Emacs configure ×ªµ½Ð´ emacs package µÄÍ¬Ñ§½¨Òé¶ÁÒ»ÏÂ
-Õâ¸öÎÄµµ
-* Configure ºÍ package ÓÐÊ²Ã´Çø±ð
-´Ó Emacs-lisp ÓïÑÔ½Ç¶ÈÀ´Ëµ£¬Ã»ÓÐ¶à´óµÄÇø±ð£¬¿ÉÄÜÐ´ package µÄÊ±ºò£¬
-Emacs-lisp Ó¦ÓÃµÄ¸ü¼Ó¹æ·¶Ò»µã¡£
+* è°åº”è¯¥è¯»è¿™ä¸ªæ–‡æ¡£
+åˆšåˆšä»Žå†™ Emacs configure è½¬åˆ°å†™ emacs package çš„åŒå­¦å»ºè®®è¯»ä¸€ä¸‹
+è¿™ä¸ªæ–‡æ¡£
+* Configure å’Œ package æœ‰ä»€ä¹ˆåŒºåˆ«
+ä»Ž Emacs-lisp è¯­è¨€è§’åº¦æ¥è¯´ï¼Œæ²¡æœ‰å¤šå¤§çš„åŒºåˆ«ï¼Œå¯èƒ½å†™ package çš„æ—¶å€™ï¼Œ
+Emacs-lisp åº”ç”¨çš„æ›´åŠ è§„èŒƒä¸€ç‚¹ã€‚
 
-ÎÒÈÏÎª×î´óµÄ²»Í¬¿ÉÄÜÊÇ±àÐ´Ê±×ñÑ­µÄÀíÄî£º
-1. Configure ÊÇÐ´¸ø×Ô¼ºÓÃµÄ£¬Èç¹ûÆäËûÍ¬Ñ§Ê¹ÓÃÄãµÄ configure ³öÁËÎÊÌâ£¬
-   Äã¿ÉÒÔ²»¸ºÈÎºÎÔðÈÎ¡£
-2. Package Ö÷ÒªÊÇÐ´¸øÆäËûÈËÊ¹ÓÃµÄ£¬Èç¹û³öÁËÎÊÌâ£¬Î¬»¤ÕßÊÇÓÐÖ±½Ó
-   ÔðÈÎµÄ:-)
+æˆ‘è®¤ä¸ºæœ€å¤§çš„ä¸åŒå¯èƒ½æ˜¯ç¼–å†™æ—¶éµå¾ªçš„ç†å¿µï¼š
+1. Configure æ˜¯å†™ç»™è‡ªå·±ç”¨çš„ï¼Œå¦‚æžœå…¶ä»–åŒå­¦ä½¿ç”¨ä½ çš„ configure å‡ºäº†é—®é¢˜ï¼Œ
+   ä½ å¯ä»¥ä¸è´Ÿä»»ä½•è´£ä»»ã€‚
+2. Package ä¸»è¦æ˜¯å†™ç»™å…¶ä»–äººä½¿ç”¨çš„ï¼Œå¦‚æžœå‡ºäº†é—®é¢˜ï¼Œç»´æŠ¤è€…æ˜¯æœ‰ç›´æŽ¥
+   è´£ä»»çš„:-)
 
-ËùÒÔ£¬Ð´ package µÄÊ±ºò£¬Î¬»¤ÕßÐèÒª×ñÊØ¸ü¶àµÄÒþÐÔ¹ßÀý¡£
-* ±àÐ´ package Ó¦×ñÑ­µÄ¹ßÀý
-** ÎÞ¶ñÒâÔ­Ôò
-*** ²»ÄÜÓÐ¶ñÒâ´úÂë
-*** ²»ÄÜÍµÍµµÄÇÔÈ¡ÓÃ»§ÒþË½¡£
-** ³É±¾Ð§ÒæÔ­Ôò
-*** ²»ÄÜºÁÎÞÀíÓÉµÄÖØ¸´ÖÆÔìÂÖ×Ó
+æ‰€ä»¥ï¼Œå†™ package çš„æ—¶å€™ï¼Œç»´æŠ¤è€…éœ€è¦éµå®ˆæ›´å¤šçš„éšæ€§æƒ¯ä¾‹ã€‚
+* ç¼–å†™ package åº”éµå¾ªçš„æƒ¯ä¾‹
+** æ— æ¶æ„åŽŸåˆ™
+*** ä¸èƒ½æœ‰æ¶æ„ä»£ç 
+*** ä¸èƒ½å·å·çš„çªƒå–ç”¨æˆ·éšç§ã€‚
+** æˆæœ¬æ•ˆç›ŠåŽŸåˆ™
+*** ä¸èƒ½æ¯«æ— ç†ç”±çš„é‡å¤åˆ¶é€ è½®å­
 
-** ×ðÖØÓÃ»§Ñ¡ÔñµÄÔ­Ôò
-Package ¿ÉÒÔ¸øÓÃ»§Ìá¹©¸ü¶àµÄÑ¡Ôñ£¬µ«×öÎª package µÄÎ¬»¤Õß£¬Äã²»ÄÜËæÒâ
-µÄÌæÓÃ»§×ö¾ö¶¨¡£
+** å°Šé‡ç”¨æˆ·é€‰æ‹©çš„åŽŸåˆ™
+Package å¯ä»¥ç»™ç”¨æˆ·æä¾›æ›´å¤šçš„é€‰æ‹©ï¼Œä½†åšä¸º package çš„ç»´æŠ¤è€…ï¼Œä½ ä¸èƒ½éšæ„
+çš„æ›¿ç”¨æˆ·åšå†³å®šã€‚
 
-*** ²»¿ÉÒÔËæÒâµÄ¶¨ÒåÈ«¾Ö±äÁ¿
-ÔÚ Emacs ÖÐ£¬ÓÃ»§±äÁ¿ÍùÍùÊÇÈ«¾Ö±äÁ¿£¬ËùÒÔ package Î¬»¤Õß²»ÄÜËæÒâµÄ
-¶¨ÒåÈ«¾Ö±äÁ¿£¬ÌØ±ðÒª×¢ÒâµÄÊÇ£º²»¿ÉÒÔ½öÊ¹ÓÃ setq À´¶¨Òå±äÁ¿¡£
+*** ä¸å¯ä»¥éšæ„çš„å®šä¹‰å…¨å±€å˜é‡
+åœ¨ Emacs ä¸­ï¼Œç”¨æˆ·å˜é‡å¾€å¾€æ˜¯å…¨å±€å˜é‡ï¼Œæ‰€ä»¥ package ç»´æŠ¤è€…ä¸èƒ½éšæ„çš„
+å®šä¹‰å…¨å±€å˜é‡ï¼Œç‰¹åˆ«è¦æ³¨æ„çš„æ˜¯ï¼šä¸å¯ä»¥ä»…ä½¿ç”¨ setq æ¥å®šä¹‰å˜é‡ã€‚
 
-setq Õâ¸ö²Ù×÷·ûÊÇ *±äÁ¿¸³Öµ* ²Ù×÷·û£¬²»ÊÇ *±äÁ¿¶¨Òå* ²Ù×÷·û£¬
-µ«Èç¹û±»¸³ÖµµÄ±äÁ¿²»´æÔÚ£¬Ëü»á¶¨ÒåÕâ¸ö *È«¾Ö±äÁ¿*, È»ºóÔÙ¸³Öµ¡£
-Ð´ configure µÄÊ±ºò£¬ÎÒÃÇÎªÁËÊ¡ÊÂ£¬Ï°¹ßÓÃËüÀ´¶¨ÒåÒ»¸ö±äÁ¿£¬
+setq è¿™ä¸ªæ“ä½œç¬¦æ˜¯ *å˜é‡èµ‹å€¼* æ“ä½œç¬¦ï¼Œä¸æ˜¯ *å˜é‡å®šä¹‰* æ“ä½œç¬¦ï¼Œ
+ä½†å¦‚æžœè¢«èµ‹å€¼çš„å˜é‡ä¸å­˜åœ¨ï¼Œå®ƒä¼šå®šä¹‰è¿™ä¸ª *å…¨å±€å˜é‡*, ç„¶åŽå†èµ‹å€¼ã€‚
+å†™ configure çš„æ—¶å€™ï¼Œæˆ‘ä»¬ä¸ºäº†çœäº‹ï¼Œä¹ æƒ¯ç”¨å®ƒæ¥å®šä¹‰ä¸€ä¸ªå˜é‡ï¼Œ
 
-µ«Ð´ package µÄÊ±ºò£¬Õâ¸ö¹¦ÄÜ¾ÍÓÐÆäËû·çÏÕ£¬ÒÔÏÂÃæÒ»¾ä´úÂëÎªÀý×Ó£º
+ä½†å†™ package çš„æ—¶å€™ï¼Œè¿™ä¸ªåŠŸèƒ½å°±æœ‰å…¶ä»–é£Žé™©ï¼Œä»¥ä¸‹é¢ä¸€å¥ä»£ç ä¸ºä¾‹å­ï¼š
 
 #+BEGIN_SRC emacs-lisp
 (setq xxx "xxx")
 #+END_SRC
 
-Èç¹û xxx ÊÇÒ»¸öÆäËû package µÄÈ«¾Ö±äÁ¿»òÕßÓÃ»§±äÁ¿£¬¾ÍÓÐ¿ÉÄÜ»á³öÏÖ
-Ò»Ð©ÒâÏë²»µ½µÄÎÊÌâ£¬¶ÌµÄ±äÁ¿¸üÈÝÒ×³öÎÊÌâ£¬ÒòÎª emacs-lisp ºËÐÄ´úÂë
-Ê¹ÓÃµÄÈ«¾Ö±äÁ¿±È½Ï¶Ì£¬ ±ÈÈç£ºname
+å¦‚æžœ xxx æ˜¯ä¸€ä¸ªå…¶ä»– package çš„å…¨å±€å˜é‡æˆ–è€…ç”¨æˆ·å˜é‡ï¼Œå°±æœ‰å¯èƒ½ä¼šå‡ºçŽ°
+ä¸€äº›æ„æƒ³ä¸åˆ°çš„é—®é¢˜ï¼ŒçŸ­çš„å˜é‡æ›´å®¹æ˜“å‡ºé—®é¢˜ï¼Œå› ä¸º emacs-lisp æ ¸å¿ƒä»£ç 
+ä½¿ç”¨çš„å…¨å±€å˜é‡æ¯”è¾ƒçŸ­ï¼Œ æ¯”å¦‚ï¼šname
 
-³£¼ûµÄ¶¨ÒåÈ«¾Ö±äÁ¿µÄ·½Ê½ÓÐÁ½ÖÖ£º
-1. ¶¨ÒåÒ»¸öÓÃ»§±äÁ¿
+å¸¸è§çš„å®šä¹‰å…¨å±€å˜é‡çš„æ–¹å¼æœ‰ä¸¤ç§ï¼š
+1. å®šä¹‰ä¸€ä¸ªç”¨æˆ·å˜é‡
    #+BEGIN_SRC emacs-lisp
    (defcustom elptips-name "elptips-name"
      "Elptips's name.")
    #+END_SRC
-2. ¶¨ÒåÒ»¸öÆÕÍ¨µÄÈ«¾Ö±äÁ¿
+2. å®šä¹‰ä¸€ä¸ªæ™®é€šçš„å…¨å±€å˜é‡
    #+BEGIN_SRC emacs-lisp
    (defvar elptips-name "elptips-name"
      "Elptips's name.")
    #+END_SRC
 
-*** ²»ÄÜËæÒâ¸²¸ÇÄã×Ô¼º package µÄÓÃ»§±äÁ¿
-Èç¹ûÄãÔÚ×Ô¼º package ÖÐÓÃ defcustom ¶¨ÒåÁËÒ»¸öÓÃ»§±äÁ¿£¬Äã¾Í²»¿ÉÒÔ
-ËæÒâµÄ¸²¸ÇËü£¬±ÈÈç£º
+*** ä¸èƒ½éšæ„è¦†ç›–ä½ è‡ªå·± package çš„ç”¨æˆ·å˜é‡
+å¦‚æžœä½ åœ¨è‡ªå·± package ä¸­ç”¨ defcustom å®šä¹‰äº†ä¸€ä¸ªç”¨æˆ·å˜é‡ï¼Œä½ å°±ä¸å¯ä»¥
+éšæ„çš„è¦†ç›–å®ƒï¼Œæ¯”å¦‚ï¼š
 
 #+BEGIN_EXAMPLE emacs-lisp
 (defcustom elptips-name nil)
 (setq elptips-name "elptips-name2")
 #+END_EXAMPLE
 
-»òÕß£º
+æˆ–è€…ï¼š
 
 #+BEGIN_EXAMPLE emacs-lisp
 (defvar elptips-name nil)
 (setq elptips-name "elptips-name2")
 #+END_EXAMPLE
 
-ÕâÑù×öÖ®ºó£¬Äã¾Í±äÏàµÄÎªÓÃ»§×öÁËÑ¡Ôñ£¬ÓÐ¿ÉÄÜ¸øÓÃ»§»á´øÀ´À§ÈÅ¡£
+è¿™æ ·åšä¹‹åŽï¼Œä½ å°±å˜ç›¸çš„ä¸ºç”¨æˆ·åšäº†é€‰æ‹©ï¼Œæœ‰å¯èƒ½ç»™ç”¨æˆ·ä¼šå¸¦æ¥å›°æ‰°ã€‚
 
-*** ²»ÄÜËæÒâ¸²¸ÇÆäËû package ÓÃ»§±äÁ¿
-ÓÃ»§±äÁ¿¾ÍÊÇÔÚ package ÖÐ£¬Ê¹ÓÃ defcustom ¶¨ÒåµÄ±äÁ¿£¬ÕâÐ©±äÁ¿ÊÇ
-Áô¸øÓÃ»§ÉèÖÃµÄ£¬²»ÄÜËæÒâ¸²¸Ç£¬·ñÔò³öÏÖÎÊÌâºó£¬Ê¹ÓÃÕßºÜÄÑ·¢ÏÖÄÄÀï
-³öÏÖÁËÎÊÌâ¡£
+*** ä¸èƒ½éšæ„è¦†ç›–å…¶ä»– package ç”¨æˆ·å˜é‡
+ç”¨æˆ·å˜é‡å°±æ˜¯åœ¨ package ä¸­ï¼Œä½¿ç”¨ defcustom å®šä¹‰çš„å˜é‡ï¼Œè¿™äº›å˜é‡æ˜¯
+ç•™ç»™ç”¨æˆ·è®¾ç½®çš„ï¼Œä¸èƒ½éšæ„è¦†ç›–ï¼Œå¦åˆ™å‡ºçŽ°é—®é¢˜åŽï¼Œä½¿ç”¨è€…å¾ˆéš¾å‘çŽ°å“ªé‡Œ
+å‡ºçŽ°äº†é—®é¢˜ã€‚
 
-*** ²»ÄÜËæÒâ¸²¸ÇÆäËû package µÄÄÚ²¿±äÁ¿
-Èç¹ûËæÒâ¸²¸ÇÆäËû package µÄÄÚ²¿±äÁ¿£¬ºÜÓÐ¿ÉÄÜ»áÈÃÕâ¸ö°üÔËÐÐÒì³££¬
-¶øÇÒºÜÄÑ·¢ÏÖÎÊÌâ³öÏÖÔÚÄÄÀï¡£
+*** ä¸èƒ½éšæ„è¦†ç›–å…¶ä»– package çš„å†…éƒ¨å˜é‡
+å¦‚æžœéšæ„è¦†ç›–å…¶ä»– package çš„å†…éƒ¨å˜é‡ï¼Œå¾ˆæœ‰å¯èƒ½ä¼šè®©è¿™ä¸ªåŒ…è¿è¡Œå¼‚å¸¸ï¼Œ
+è€Œä¸”å¾ˆéš¾å‘çŽ°é—®é¢˜å‡ºçŽ°åœ¨å“ªé‡Œã€‚
+
+
+
+# Local Variables:
+# coding: utf-8-unix
+# End:
