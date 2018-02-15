@@ -55,10 +55,10 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    #+END_SRC
 2. 定义一个 package *内部使用* 的全局变量
    #+BEGIN_SRC emacs-lisp
-   (defvar elptips-name "elptips--name"
+   (defvar elptips--name "elptips--name"
      "Elptips's name.")
    #+END_SRC
-   注：Lisp 有一个惯例：使用 "--" 来表示这个全局变量是包内部
+   注：Lisp 有一个惯例：使用 "-\-" 来表示这个全局变量是包内部
    使用的变量，用户不应该使用它，package 的维护着可以随意对其
    赋值，并且没有义务在升级时维护它的向后兼容性。
 3. 定义一个局部变量
