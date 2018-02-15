@@ -1,12 +1,13 @@
 #+TITLE: Emacs-lisp Packaging Tips
 * 谁应该读这个文档
-刚刚从写 Emacs configure 转到写 emacs package 的同学建议读一下
+刚刚从编写 Emacs configure 转到编写 emacs package 的同学建议读一下
 这个文档。
+
 * Configure 和 package 有什么区别
 从 Emacs-lisp 语言角度来说，两者没有多大的区别，可能写 package 的时候，
 Emacs-lisp 语言应用的更加规范一点。
 
-但编写 configure 和编写 package 需要遵循的理念有很大的不同：
+但编写 configure 和编写 package 需要遵循的理念有很大不同：
 1. Configure 是写给自己用的，如果其他同学使用你的 configure 出了问题，
    那么他只能自认倒霉，你可以不负任何责任。
 2. Package 编写出来主要是给其他人使用的，如果出了问题，维护者是有直接
@@ -15,31 +16,41 @@ Emacs-lisp 语言应用的更加规范一点。
 * package 编写原则
 1. 成本效益原则：
    1. 编写的 package 不能含有恶意代码，不能窃取用户隐私。
-   2. 编写的 package 值得用户花时间和精力去学习使用，谨慎的重复制造轮子。
+   2. 编写的 package 值得用户花时间和精力去学习使用，
+      重复制造轮子的决定要慎重。
 2. 正确使用 Emacs-lisp
 3. 尊重社区惯例原则：主要是使用公认的代码缩进方式，让代码容易维护等。
 4. 尊重用户选择原则：
-   1. 不能随意覆盖自己的用户接口变量
+   1. 不能随意覆盖自己 package 的用户接口变量
    2. 不能随意覆盖其他 package 的任何全局变量，
       包含用户接口变量和内部使用全局变量。
 5. 用户知情同意原则：当一个 package *必须* 覆盖用户接口变量时，
-   package 维护者要让用户知道哪个用户接口变量被覆盖了，这样的话，
-   即使出问题，用户也容易调试。
+   这个 package 的维护者 *尽自己最大的努力* 让用户知道哪些用户
+   接口变量被覆盖了，这样做的话，即使出问题，用户也容易调试。
 
-* 花一些时间给 package 取一个好名字。
+* package 命名
+给你的 package 命名这个工作非常非常重要，千万不能马虎，因为对
+一个已经存在的 package 重命名是非常麻烦的事情，需要做许许多多
+兼容性工作。
+
 Emacs-lisp 和其他 lisp 不同，Emacs-lisp 的全局变量的作用范围非常大，
-只要一个 package 加载了，那么在任何地方，都可以访问和设置这个 package
-的所有全局变量。
+只要一个 package 加载了，那么在当前 Emacs session 的任何代码处，都
+可以随意的访问和设置这个 package 的所有全局变量。
 
-为了防止变量冲突， Emacs 社区有这么一个惯例： 一个 package 的
-全局变量，函数定义以及宏定义等，都应该使用统一的前缀，比如：
-company 使用 "company-" 前缀。
+Emacs-lisp 这个特性很容易发生变量冲突，为了防止变量冲突，Emacs 社区
+有这么一个惯例： 一个 package 的全局变量，函数定义以及宏定义等，名字
+都应该使用统一的前缀，比如： company package 的变量，命名时都使用
+"company-"  前缀。
 
-另外三条建议是：
-1. package 不能取其他 package 正在使用或者曾经使用过的名字。
-2. package 的名字要好记好写好认，最好是 *一个* 单词或者 *一个* 缩写，
-   比如：company, elpa 。
-3. package 使用的前缀最好就是 package 的名字。
+Emacs-lisp 语言本身对 package 的名称没有多少限制，但并不代表你可以
+随意使用任何字符串做为一个 package 的名称，建议新手遵循以下惯例：
+1. package 的名字不能是其他 package 正在使用或者曾经使用过的名字。
+2. package 的名字 *只能使用* 小写字母，数字和下划线。
+3. package 的名字要好记，好写，好认。
+   1. 最好是 *一个* 单词或者 *一个* 缩写，比如：company 或者 elpa 。
+   2. 最好不要超过2个单词。
+   3. 不要太长， *个人感觉* 最好不超过15个字符。
+4. package 的前缀最好使用 package 名称加连字符。
 
 * 定义变量的正确方式
 Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
