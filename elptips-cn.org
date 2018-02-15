@@ -22,6 +22,9 @@ Emacs-lisp 语言应用的更加规范一点。
    1. 不能随意覆盖自己的用户接口变量
    2. 不能随意覆盖其他 package 的任何全局变量，
       包含用户接口变量和内部使用全局变量。
+5. 用户知情同意原则：当一个 package *必须* 覆盖用户接口变量时，
+   package 维护者要让用户知道哪个用户接口变量被覆盖了，这样的话，
+   即使出问题，用户也容易调试。
 
 * 花一些时间给 package 取一个好名字。
 Emacs-lisp 和其他 lisp 不同，Emacs-lisp 的全局变量的作用范围非常大，
@@ -175,6 +178,108 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
 在其他情况使用 setq 可能就是滥用了，当然我这里只是说 *可能*, 只要你的
 使用方式尊重 package 编写原则，那就是合理的用法 :-)
+* 如果必须设置用户接口变量，该怎么办？
+虽然 package 维护者不应该随意覆盖用户接口变量，但现实情况是：
+我们有时候必须这样做，理想很丰满，但现实却很骨感。。。
+
+如果一个 package 维护者必须覆盖一个用户接口变量，那就要遵循
+"用户知情同意原则。", 尽可能减小影响范围。
+
+常见的有下面四种方式，但一般只建议只使用前两种方式，后面两种
+是 *黑科技*, 一定要谨慎使用，不然你会遭到唾弃。
+
+1. 指导用户自己覆盖
+
+   最常用的方式是： 在文档中添加一个例子来告诉用户怎么设置，
+   这种方法是最稳妥可靠的，大多数情况下，我们只能使用这种方式。
+
+2. 使用 let 或者类似的表达式来 *局部覆盖* 用户接口变量
+
+   #+BEGIN_SRC emacs-lisp
+   (let ((pkgxxx-name "elptip-name5"))
+     (pkgxxx-return-name))
+   #+END_SRC
+
+   这样在 let 定义的局部范围， elptip-name 被强制绑定到另外一个值，
+   这个用法 *非常的常用* ，当满足下面两个条件时，就可以这么用。
+   1. package 所依赖的函数无法设置参数，只能通过全局变量来改变其行为。
+   2. 对这个全局变量局部绑定，不会对所依赖的 package 造成影响。
+
+   比如：
+
+   #+BEGIN_SRC emacs-lisp
+   (defun pkgxxx-return-name ()
+     (message pkgxxx-name))
+
+   (defun pkgxxx-return-fakename ()
+     (interactive)
+     (let ((pkgxxx-name "pkgxxx-name5"))
+       (pkgxxx-return-name)))
+
+   注：这种方式让习惯词法作用域的同学很不习惯，确实是这样子的，在 Emacs-lisp
+   中全局变量无论什么时候，都是按照动态作用域处理的。
+   #+END_SRC
+
+3. 使用激活函数来覆盖用户接口变量
+
+   #+BEGIN_SRC emacs-lisp
+   (defun elptip-pkgxxx-enable ()
+     (interactive)
+     (setq pkgxxx-name "pkgxxx-name5")
+     (message "elptips: `pkgxxx-name' has been override."))
+   #+END_SRC
+
+   这种方式要注意：
+   1. 激活函数不能默认运行，只能通过文档告诉用户在它们的配置中添加。
+   2. 如果无法做到完全无影响，就要提示用户哪个或者哪些 “用户接口变量” 被强制覆盖了。
+   3. 最好告诉用户，如何简单的取消激活，如果可以，添加一个 disable 函数，
+      但令人遗憾的是，disable 函数看似容易编写，其实往往是不可行的。
+      像这种覆盖用户接口变量的激活函数，一般也只能让用户删除这行配置，
+      然后重启 emacs, 别无它法。
+
+      比如下面这个例子，看似可行，实际是不合理的。。。。
+
+      #+BEGIN_SRC emacs-lisp
+      (defun elptip-pkgxxx-disable ()
+        (interactive)
+        (setq pkgxx-name "pkgxxx-name")))
+      #+END_SRC
+
+   总的来说，这种方式也不太建议使用，不如在文档中
+   添加一个事例配置有效。
+
+4. 使用激活函数来覆盖影响用户接口变量的函数
+
+   假设 pkgxxx 中有一个函数专门用来处理用户
+   接口 pkgxxx-name :
+
+   #+BEGIN_SRC emacs-lisp
+   (defun pkgxxx-return-name ()
+     (message pkgxxx-name))
+   #+END_SRC
+
+   我们可以通过替换 `pkgxxx-return-name' 这个函数来改变
+   其行为，但我们不能直接在 elptips 包中添加一个新的
+   `pkgxxx-return-name' 函数，这种偷偷摸摸的覆盖让遇到
+   问题的用户很难调试，我们需要使用 emacs 内置的一种功能：
+   nadvice 。
+
+   #+BEGIN_SRC emacs-lisp
+   (defun elptips-pkgxxx-return-name ()
+     (let ((pkgxxx-name "pkgxxx-name5"))
+       (funcall orig-func)))
+
+   (advice-add 'pkgxxx-return-name
+               :around #'elptips-pkgxxx-return-name)
+   #+END_SRC
+
+   这样做的话，用户在阅读 `pkgxxx-return-name' 的文档
+   时，就可以发现这个函数被哪个函数 advice 了，算是
+   一种知情同意，这种方式的另外一种好处是可以写出一个
+   比较靠谱的 disble 函数。
+
+   不过即便如此， emacs 官方社区也是不建议使用这种机制的。
+
 * 未完待续。。。
 * 尾注
 
