@@ -196,7 +196,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 2. 使用 let 或者类似的表达式来 *局部覆盖* 用户接口变量
 
    #+BEGIN_SRC emacs-lisp
-   (let ((pkgxxx-name "elptip-name5"))
+   (let ((pkgxxx-name "pkgxxx-name5"))
      (pkgxxx-return-name))
    #+END_SRC
 
@@ -215,10 +215,10 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
      (interactive)
      (let ((pkgxxx-name "pkgxxx-name5"))
        (pkgxxx-return-name)))
+   #+END_SRC
 
    注：这种方式让习惯词法作用域的同学很不习惯，确实是这样子的，在 Emacs-lisp
    中全局变量无论什么时候，都是按照动态作用域处理的。
-   #+END_SRC
 
 3. 使用激活函数来覆盖用户接口变量
 
