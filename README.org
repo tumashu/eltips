@@ -1,4 +1,11 @@
-#+TITLE: Emacs-lisp Primary Tips
+#+TITLE: Emacs-lisp 奇淫异技
+
+* 开场白
+#+BEGIN_VERSE
+50% 的决策都是拍脑门决定的。。。。
+
+              ---- 天然二呆拍脑门后说
+#+END_VERSE
 
 * Configure vs library
 从 Emacs-lisp 语言角度来说，两者没有多大的区别，可能写 library 的时候，
