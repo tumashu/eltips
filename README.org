@@ -1,4 +1,4 @@
-#+TITLE: Emacs-lisp Library Tips
+#+TITLE: Emacs-lisp Library Coding Tips
 
 * 谁应该读这个文档
 刚刚从编写 Emacs configure 转到编写 emacs library 的同学建议读一下
