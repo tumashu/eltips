@@ -52,6 +52,18 @@ Emacs-lisp 语言本身对 package 的名称没有多少限制，但并不代表
    3. 不要太长， *个人感觉* 最好不超过15个字符。
 4. package 的前缀最好使用 package 名称加连字符。
 
+* 选择合适的发布方式
+到目前为止，最常见的 package 发布途径有两种：
+
+1. [[https:/melpa.org][Melpa]]
+2. [[https://elpa.gnu.org/][Elpa]]
+
+package 的维护者应该早做决定，因为 elpa 要求 package
+代码的所有供献者都签署 GNU 的纸质协议，如果这个事情在
+package 编写的早期不作的话，后面的工作量就大了。
+
+Melpa 的限制相对比较小了。
+
 * 定义变量的正确方式
 Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
