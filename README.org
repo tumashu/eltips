@@ -101,8 +101,8 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
 1. 定义一个用户接口变量
    #+BEGIN_SRC emacs-lisp
-   (defcustom elptips-name "elptips-name"
-     "Elptips's name.")
+   (defcustom eltips-name "eltips-name"
+     "Eltips's name.")
    #+END_SRC
 
    这是最正统的方式，但许多人嫌麻烦，最开始都使用下面的方式
@@ -110,13 +110,13 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    方式：
 
    #+BEGIN_SRC emacs-lisp
-   (defvar elptips-name "elptips-name"
-     "Elptips's name.")
+   (defvar eltips-name "eltips-name"
+     "Eltips's name.")
    #+END_SRC
 2. 定义一个只读全局变量
    #+BEGIN_SRC emacs-lisp
-   (defconst elptips-name "elptips-name"
-     "Elptips's name")
+   (defconst eltips-name "eltips-name"
+     "Eltips's name")
    #+END_SRC
 
    值得注意的是，defconst 并不能保证这个变量完全只读，而不被修改
@@ -125,15 +125,15 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    下面的这段代码类似：
 
    #+BEGIN_SRC emacs-lisp
-   (defvar elptips-name "elptips-name"
-     "Elptips's name.
+   (defvar eltips-name "eltips-name"
+     "Eltips's name.
    Please note: this variable is used as const variable.")
    #+END_SRC
 
 3. 定义一个 library *内部使用* 的全局变量
    #+BEGIN_SRC emacs-lisp
-   (defvar elptips--name "elptips--name"
-     "Elptips's name.")
+   (defvar eltips--name "eltips--name"
+     "Eltips's name.")
    #+END_SRC
    注：Lisp 有一个惯例：使用前缀加 ~--~ 来表示这个全局变量是
    library 内部使用的全局变量，用户不应该使用它，library 的维护者可以
@@ -163,9 +163,9 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 在一个 library 中，一般只能出现下面 *两种* setq 赋值结构：
 1. 对一个 library *内部使用* 的全局变量进行赋值：
    #+BEGIN_SRC emacs-lisp
-   (defvar elptips--name "elptips-name"
-     "Elptips's name.")
-   (setq elptips--name "elptips-name2")
+   (defvar eltips--name "eltips-name"
+     "Eltips's name.")
+   (setq eltips--name "eltips-name2")
    #+END_SRC
 2. 对一个局部变量进行赋值：
    #+BEGIN_SRC emacs-lisp
@@ -180,9 +180,9 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 1. 在 library 中对一个用户接口变量进行赋值
 
    #+BEGIN_SRC emacs-lisp
-   (defcustom elptips-name "elptips-name"
-     "Elptips's name.")
-   (setq elptips-name "elptips-name2")
+   (defcustom eltips-name "eltips-name"
+     "Eltips's name.")
+   (setq eltips-name "eltips-name2")
    #+END_SRC
 
    这种做法是最应该避免的！！！
@@ -192,8 +192,8 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    加载 library 会覆盖用户的设置，比如：
 
    #+BEGIN_SRC emacs-lisp
-   (setq elptips-name "elptips-name3")
-   (require 'elptips)
+   (setq eltips-name "eltips-name3")
+   (require 'eltips)
    #+END_SRC
 2. 不能直接使用 setq 来定义变量
 
@@ -201,12 +201,12 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    setq 会首先定义这个 *全局变量*, 然后再赋值，下面两个例子是等价的：
 
    #+BEGIN_SRC emacs-lisp
-   (setq elptips-name "elptips-name2")
+   (setq eltips-name "eltips-name2")
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-   (defvar elptips-name nil) ;这个全局变量会被用户当成用户接口变量
-   (setq elptips-name "elptips-name2")
+   (defvar eltips-name nil) ;这个全局变量会被用户当成用户接口变量
+   (setq eltips-name "eltips-name2")
    #+END_SRC
 
    我个人感觉，Emacs-lisp 给 setq 添加这个特性是为了编写 configure 时省事，
@@ -247,9 +247,9 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 全局变量赋值：
 
 #+BEGIN_SRC emacs-lisp
-(defvar elptips--name "elptips-name"
-  "Elptips's name.")
-(setq elptips--name "elptips-name2")
+(defvar eltips--name "eltips-name"
+  "Eltips's name.")
+(setq eltips--name "eltips-name2")
 #+END_SRC
 
 对 *局部变量* 赋值时要慎用 setq, 优先考虑使用 let* , 如果必须使用，
@@ -304,7 +304,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    (defun elptip-pkgxxx-enable ()
      (interactive)
      (setq pkgxxx-name "pkgxxx-name5")
-     (message "elptips: `pkgxxx-name' has been override."))
+     (message "eltips: `pkgxxx-name' has been override."))
    #+END_SRC
 
    这种方式要注意：
@@ -336,17 +336,17 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    #+END_SRC
 
    我们可以通过替换 `pkgxxx-return-name' 这个函数来改变
-   其行为，但我们不能直接在 elptips 包中添加一个新的
+   其行为，但我们不能直接在 eltips 包中添加一个新的
    `pkgxxx-return-name' 函数，这种偷偷摸摸的覆盖让遇到
    问题的用户很难调试，我们需要使用 emacs 内置的 nadvice 功能：
 
    #+BEGIN_SRC emacs-lisp
-   (defun elptips-pkgxxx-return-name ()
+   (defun eltips-pkgxxx-return-name ()
      (let ((pkgxxx-name "pkgxxx-name5"))
        (funcall orig-func)))
 
    (advice-add 'pkgxxx-return-name
-               :around #'elptips-pkgxxx-return-name)
+               :around #'eltips-pkgxxx-return-name)
    #+END_SRC
 
    这样做的话，用户在阅读 `pkgxxx-return-name' 的文档
