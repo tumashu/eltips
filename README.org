@@ -15,8 +15,8 @@ Emacs-lisp 很早就有了 library 的概念， 但 package 的概念是随着
 package.el 和 elpa 引入的，时间不是很长。
 
 简单来说：package 是 library 的发布形式，一个 package 可以是一个
-单独的 library 文件，也可以是一组功能联系紧密的 library 打包生成的
-zip 文件。
+单独的 library 文件，也可以是一组功能联系紧密的 library 文件打包
+生成的 zip 文件。
 
 * 谁应该读这个文档
 符合下面特征的同学值得读一下这个文档：
