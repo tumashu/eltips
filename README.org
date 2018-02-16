@@ -1,8 +1,4 @@
-#+TITLE: Emacs-lisp Library Coding Tips
-
-* 谁应该读这个文档
-刚刚从编写 Emacs configure 转到编写 emacs library 的同学建议读一下
-这个文档。
+#+TITLE: Emacs-lisp Packaging Tips
 
 * Configure 和 library 有什么区别
 从 Emacs-lisp 语言角度来说，两者没有多大的区别，可能写 library 的时候，
@@ -13,6 +9,21 @@ Emacs-lisp 语言应用的更加规范一点。
    那么他只能自认倒霉，你可以不负任何责任。
 2. Library 编写出来主要是给其他人使用的，如果出了问题，维护者是有直接
    责任的:-)
+
+* Library 和 package 有什么区别
+Emacs-lisp 很早就有了 library 的概念， 但 package 的概念是随着
+package.el 和 elpa 引入的，时间不是很长。
+
+简单来说：package 是 library 的发布形式，一个 package 可以是一个
+单独的 library 文件，也可以是一组功能联系紧密的 library 打包生成的
+zip 文件。
+
+* 谁应该读这个文档
+符合下面特征的同学值得读一下这个文档：
+
+1. 刚刚从编写 Emacs configure 转到编写 emacs library
+2. 希望将这个（些） library 打包成一个 package
+3. 愿意将这个 package 和其他同学共享。
 
 * library 编写原则
 1. 成本效益原则：
@@ -40,7 +51,7 @@ Emacs-lisp 和其他 lisp 不同，Emacs-lisp 的全局变量的作用范围非�
 
 Emacs-lisp 这个特性很容易发生变量冲突，为了防止变量冲突，Emacs 社区
 有这么一个惯例： 一个 library 的全局变量，函数定义以及宏定义等，名字
-都应该使用统一的前缀，比如： company library 的变量，命名时都使用
+都应该使用统一的前缀，比如： company 的全局变量，命名时都使用
 "company-"  前缀。
 
 Emacs-lisp 语言本身对 library 的名称没有多少限制，但并不代表你可以
@@ -53,10 +64,13 @@ Emacs-lisp 语言本身对 library 的名称没有多少限制，但并不代表
    3. 不要太长， *个人感觉* 最好不超过15个字符。
 4. library 的前缀最好使用 library 名称加连字符。
 
+* package 命名
+最好的选择是：package 的名字就选 library 的名字。
+
 * 选择合适的协议
 TODO
 * 选择合适的发布方式
-到目前为止，最常见的 library 发布途径有两种：
+到目前为止，最常见的发布途径有两种：
 
 1. [[https:/melpa.org][Melpa]]
 2. [[https://elpa.gnu.org/][Elpa]]
