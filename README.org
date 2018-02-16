@@ -11,7 +11,7 @@
 都有两个前提：
 
 1. 当前 library 或者 package 的名称为： eltips
-2. eltips 依赖的一个 library: pkgxxx
+2. eltips 依赖的一个 library: erdai
 
 * Configure vs library
 从 Emacs-lisp 语言角度来说，两者没有多大的区别，可能写 library 的时候，
@@ -280,11 +280,11 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 2. 使用 let 表达式来 *局部覆盖* 一个用户接口变量
 
    #+BEGIN_SRC emacs-lisp
-   (let ((pkgxxx-name "pkgxxx2"))
-     (pkgxxx-return-name))
+   (let ((erdai-name "erdai2"))
+     (erdai-return-name))
    #+END_SRC
 
-   在 let 定义的局部范围， pkgxxx-name 会被强制绑定到另外一个值，
+   在 let 定义的局部范围， erdai-name 会被强制绑定到另外一个值，
    这个用法 *非常的常用* ，当满足下面两个条件时，就可以这么用。
    1. library 所依赖的函数无法通过参数设置，只能通过全局变量来改变其行为。
    2. 对这个全局变量局部绑定，不会对所依赖的 library 造成影响。
@@ -292,13 +292,13 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    比如：
 
    #+BEGIN_SRC emacs-lisp
-   (defun pkgxxx-return-name ()
-     (message pkgxxx-name))
+   (defun erdai-return-name ()
+     (message erdai-name))
 
-   (defun pkgxxx-return-fakename ()
+   (defun erdai-return-fakename ()
      (interactive)
-     (let ((pkgxxx-name "pkgxxx2"))
-       (pkgxxx-return-name)))
+     (let ((erdai-name "erdai2"))
+       (erdai-return-name)))
    #+END_SRC
 
    注：这种方式让熟悉词法作用域的同学很不习惯，确实是这样子的，在 Emacs-lisp
@@ -307,10 +307,10 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 3. 使用激活函数来覆盖用户接口变量
 
    #+BEGIN_SRC emacs-lisp
-   (defun elptip-pkgxxx-enable ()
+   (defun elptip-erdai-enable ()
      (interactive)
-     (setq pkgxxx-name "pkgxxx2")
-     (message "eltips: `pkgxxx-name' has been override."))
+     (setq erdai-name "erdai2")
+     (message "eltips: `erdai-name' has been override."))
    #+END_SRC
 
    这种方式要注意：
@@ -324,38 +324,38 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    比如下面这个例子，看似可行，实际是不合理的。。。。
 
    #+BEGIN_SRC emacs-lisp
-   (defun elptip-pkgxxx-disable ()
+   (defun elptip-erdai-disable ()
      (interactive)
-     (setq pkgxx-name "pkgxxx")))
+     (setq pkgxx-name "erdai")))
    #+END_SRC
 
    除非万般无奈，这种方式不建议使用。
 
 4. 使用激活函数来覆盖影响用户接口变量的函数
 
-   假设 pkgxxx 中有一个函数专门用来处理用户
-   接口 pkgxxx-name :
+   假设 erdai 中有一个函数专门用来处理用户
+   接口 erdai-name :
 
    #+BEGIN_SRC emacs-lisp
-   (defun pkgxxx-return-name ()
-     (message pkgxxx-name))
+   (defun erdai-return-name ()
+     (message erdai-name))
    #+END_SRC
 
-   我们可以通过替换 `pkgxxx-return-name' 这个函数来改变
+   我们可以通过替换 `erdai-return-name' 这个函数来改变
    其行为，但我们不能直接在 eltips 包中添加一个新的
-   `pkgxxx-return-name' 函数，这种偷偷摸摸的覆盖让遇到
+   `erdai-return-name' 函数，这种偷偷摸摸的覆盖让遇到
    问题的用户很难调试，我们需要使用 emacs 内置的 nadvice 功能：
 
    #+BEGIN_SRC emacs-lisp
-   (defun eltips-pkgxxx-return-name ()
-     (let ((pkgxxx-name "pkgxxx2"))
+   (defun eltips-erdai-return-name ()
+     (let ((erdai-name "erdai2"))
        (funcall orig-func)))
 
-   (advice-add 'pkgxxx-return-name
-               :around #'eltips-pkgxxx-return-name)
+   (advice-add 'erdai-return-name
+               :around #'eltips-erdai-return-name)
    #+END_SRC
 
-   这样做的话，用户在阅读 `pkgxxx-return-name' 的文档
+   这样做的话，用户在阅读 `erdai-return-name' 的文档
    时，就可以发现这个函数被哪个函数 advice 了，算是
    一种知情同意，这种方式的另外一种好处是可以写出一个
    比较靠谱的 disble 函数。
