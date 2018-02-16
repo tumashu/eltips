@@ -1,17 +1,24 @@
 #+TITLE: Emacs-lisp 奇淫异技
 
 * 开场白
-#+BEGIN_VERSE
+经过深思熟虑的拍脑门后，二呆同学说：
+
+#+BEGIN_EXAMPLE
 50% 的决策都是拍脑门决定的。。。。
+#+END_EXAMPLE
 
-              ---- 天然二呆拍脑门后说
-#+END_VERSE
+* 谁应该读这个文档
+符合下面特征的同学值得读一下这个文档：
 
-读这个文档之前，同学们需要知道，所有的示例代码
+1. 刚刚从编写 Emacs configure 转到编写 emacs library
+2. 希望将这个（些） library 打包成一个 package
+3. 愿意将这个 package 和其他同学共享。
+
+读这个文档之前，同学们需要知道，下面所有的示例代码
 都有两个前提：
 
-1. 当前 library 或者 package 的名称为： eltips
-2. eltips 依赖的一个 library: erdai
+1. 当前 library 或者 package 的名称为：eltips
+2. Eltips 依赖的一个名字为 erdai 的 library :-)
 
 * Configure vs library
 从 Emacs-lisp 语言角度来说，两者没有多大的区别，可能写 library 的时候，
@@ -30,13 +37,6 @@ package.el 和 elpa 引入的，时间不是很长。
 简单来说：package 是 library 的发布形式，一个 package 可以是一个
 单独的 library 文件，也可以是一组功能联系紧密的 library 文件打包
 生成的 zip 文件。
-
-* 谁应该读这个文档
-符合下面特征的同学值得读一下这个文档：
-
-1. 刚刚从编写 Emacs configure 转到编写 emacs library
-2. 希望将这个（些） library 打包成一个 package
-3. 愿意将这个 package 和其他同学共享。
 
 * library 编写原则
 1. 成本效益原则：
