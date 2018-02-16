@@ -95,7 +95,46 @@ library 编写的早期不作的话，后面的工作量就大了。
 Melpa 的限制相对比较小了。
 
 * 创建 library 框架文件
-TODO
+方法非常多，比较简单方便的一种方式是：
+
+1. 新建并打开一个文件 eltips.el
+2. 运行 auto-insert 命令(建议临时关闭 ivy-mode)。
+
+   就会得到类似下面的一个 library 框架，然后开始
+   写代码就 OK 了。
+
+   #+BEGIN_SRC emacs-lisp
+   ;;; eltips.el --- Emacs-lisp tips                    -*- lexical-binding: t; -*-
+
+   ;; Copyright (C) 2018  Feng Shu
+
+   ;; Author: Feng Shu <tumashu@163.com>
+   ;; Keywords: docs
+
+   ;; This program is free software; you can redistribute it and/or modify
+   ;; it under the terms of the GNU General Public License as published by
+   ;; the Free Software Foundation, either version 3 of the License, or
+   ;; (at your option) any later version.
+
+   ;; This program is distributed in the hope that it will be useful,
+   ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+   ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   ;; GNU General Public License for more details.
+
+   ;; You should have received a copy of the GNU General Public License
+   ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+   ;;; Commentary:
+
+   ;;
+
+   ;;; Code:
+
+
+
+   (provide 'eltips)
+   ;;; eltips.el ends here
+   #+END_SRC
 
 * 了解 Emacs-lisp Style
 仔细阅读下面这个项目中的所有文档：
