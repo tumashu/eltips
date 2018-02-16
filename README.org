@@ -351,14 +351,23 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
      (let ((erdai-name "erdai2"))
        (funcall orig-func)))
 
-   (advice-add 'erdai-return-name
-               :around #'eltips-erdai-return-name)
+   (defun eltips-erdai-enable ()
+     (interactive)
+     (advice-add 'erdai-return-name
+                 :around #'eltips-erdai-return-name))
    #+END_SRC
 
    这样做的话，用户在阅读 `erdai-return-name' 的文档
    时，就可以发现这个函数被哪个函数 advice 了，算是
    一种知情同意，这种方式的另外一种好处是可以写出一个
    比较靠谱的 disble 函数。
+
+   #+BEGIN_SRC emacs-lisp
+   (defun eltips-erdai-disable ()
+     (interactive)
+     (advice-remove 'erdai-return-name
+                    #'eltips-erdai-return-name))
+   #+END_SRC
 
    不过即便如此， emacs 官方社区也是不建议使用这种机制的
    这里还是那句话，除非万般无奈，不建议使用。
