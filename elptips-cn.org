@@ -1,4 +1,5 @@
 #+TITLE: Emacs-lisp Packaging Tips
+
 * 谁应该读这个文档
 刚刚从编写 Emacs configure 转到编写 emacs package 的同学建议读一下
 这个文档。
@@ -7,66 +8,66 @@
 从 Emacs-lisp 语言角度来说，两者没有多大的区别，可能写 package 的时候，
 Emacs-lisp 语言应用的更加规范一点。
 
-但编写 configure 和编写 package 需要遵循的理念有很大不同：
+但编写 configure 和编写 library 需要遵循的理念有很大不同：
 1. Configure 是写给自己用的，如果其他同学使用你的 configure 出了问题，
    那么他只能自认倒霉，你可以不负任何责任。
-2. Package 编写出来主要是给其他人使用的，如果出了问题，维护者是有直接
+2. Library 编写出来主要是给其他人使用的，如果出了问题，维护者是有直接
    责任的:-)
 
-* package 编写原则
+* library 编写原则
 1. 成本效益原则：
-   1. 编写的 package 不能含有恶意代码，不能窃取用户隐私。
-   2. 编写的 package 值得用户花时间和精力去学习使用，
+   1. 编写的 library 不能含有恶意代码，不能窃取用户隐私。
+   2. 编写的 library 值得用户花时间和精力去学习使用，
       重复制造轮子的决定要慎重。
 2. 正确使用 Emacs-lisp
 3. 尊重社区惯例原则：主要是使用公认的代码缩进方式，让代码容易维护等。
 4. 尊重用户选择原则：
-   1. 不能随意覆盖自己 package 的用户接口变量
-   2. 不能随意覆盖其他 package 的任何全局变量，
+   1. 不能随意覆盖自己 library 的用户接口变量
+   2. 不能随意覆盖其他 library 的任何全局变量，
       包含用户接口变量和内部使用全局变量。
-5. 用户知情同意原则：当一个 package *必须* 覆盖用户接口变量时，
-   这个 package 的维护者 *尽自己最大的努力* 让用户知道哪些用户
+5. 用户知情同意原则：当一个 library *必须* 覆盖用户接口变量时，
+   这个 library 的维护者 *尽自己最大的努力* 让用户知道哪些用户
    接口变量被覆盖了，这样做的话，即使出问题，用户也容易调试。
 
-* package 命名
-给你的 package 命名这个工作非常非常重要，千万不能马虎，因为对
-一个已经存在的 package 重命名是非常麻烦的事情，需要做许许多多
+* library 命名
+给你的 library 命名这个工作非常非常重要，千万不能马虎，因为对
+一个已经存在的 library 重命名是非常麻烦的事情，需要做许许多多
 兼容性工作。
 
 Emacs-lisp 和其他 lisp 不同，Emacs-lisp 的全局变量的作用范围非常大，
-只要一个 package 加载了，那么在当前 Emacs session 的任何代码处，都
-可以随意的访问和设置这个 package 的所有全局变量。
+只要一个 library 加载了，那么在当前 Emacs session 的任何代码处，都
+可以随意的访问和设置这个 library 的所有全局变量。
 
 Emacs-lisp 这个特性很容易发生变量冲突，为了防止变量冲突，Emacs 社区
-有这么一个惯例： 一个 package 的全局变量，函数定义以及宏定义等，名字
-都应该使用统一的前缀，比如： company package 的变量，命名时都使用
+有这么一个惯例： 一个 library 的全局变量，函数定义以及宏定义等，名字
+都应该使用统一的前缀，比如： company library 的变量，命名时都使用
 "company-"  前缀。
 
-Emacs-lisp 语言本身对 package 的名称没有多少限制，但并不代表你可以
-随意使用任何字符串做为一个 package 的名称，建议新手遵循以下惯例：
-1. package 的名字不能是其他 package 正在使用或者曾经使用过的名字。
-2. package 的名字 *只能使用* 小写字母，数字和下划线。
-3. package 的名字要好记，好写，好认。
+Emacs-lisp 语言本身对 library 的名称没有多少限制，但并不代表你可以
+随意使用任何字符串做为一个 library 的名称，建议新手遵循以下惯例：
+1. library 的名字不能是其他 library 正在使用或者曾经使用过的名字。
+2. library 的名字 *只能使用* 小写字母，数字和下划线。
+3. library 的名字要好记，好写，好认。
    1. 最好是 *一个* 单词或者 *一个* 缩写，比如：company 或者 elpa 。
    2. 最好不要超过2个单词。
    3. 不要太长， *个人感觉* 最好不超过15个字符。
-4. package 的前缀最好使用 package 名称加连字符。
+4. library 的前缀最好使用 library 名称加连字符。
 
 * 选择合适的协议
 TODO
 * 选择合适的发布方式
-到目前为止，最常见的 package 发布途径有两种：
+到目前为止，最常见的 library 发布途径有两种：
 
 1. [[https:/melpa.org][Melpa]]
 2. [[https://elpa.gnu.org/][Elpa]]
 
-package 的维护者应该早做决定，因为 elpa 要求 package
+library 的维护者应该早做决定，因为 elpa 要求 library
 代码的所有供献者都签署 GNU 的纸质协议，如果这个事情在
-package 编写的早期不作的话，后面的工作量就大了。
+library 编写的早期不作的话，后面的工作量就大了。
 
 Melpa 的限制相对比较小了。
 
-* 创建 package 框架文件
+* 创建 library 框架文件
 TODO
 
 * 了解 Emacs-lisp Style
@@ -84,22 +85,22 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    #+END_SRC
 
    这是最正统的方式，但许多人嫌麻烦，最开始都使用下面的方式
-   定义一个用户接口变量，等到 package 相对稳定后，再改用上面的
+   定义一个用户接口变量，等到 library 相对稳定后，再改用上面的
    方式：
 
    #+BEGIN_SRC emacs-lisp
    (defvar elptips-name "elptips-name"
      "Elptips's name.")
    #+END_SRC
-2. 定义一个 package *内部使用* 的全局变量
+2. 定义一个 library *内部使用* 的全局变量
    #+BEGIN_SRC emacs-lisp
    (defvar elptips--name "elptips--name"
      "Elptips's name.")
    #+END_SRC
    注：Lisp 有一个惯例：使用前缀加 ~--~ 来表示这个全局变量是
-   package 内部使用的全局变量，用户不应该使用它，package 的维护者可以
+   library 内部使用的全局变量，用户不应该使用它，library 的维护者可以
    随意添加，删除一个内部全局变量，可以对一个内部全局变量任意赋值，
-   更重要的是 package 维护者不需要维护内部全局变量的向后兼容性。
+   更重要的是 library 维护者不需要维护内部全局变量的向后兼容性。
 3. 定义一个局部变量
    #+BEGIN_SRC emacs-lisp
    (let ((a 1)
@@ -121,8 +122,8 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 可惜的是：这个规则非常简单，但新手往往不太注意。
 
 在 Emacs-lisp 中，最常用的变量赋值操作符是：setq,
-在一个 package 中，一般只能出现下面 *两种* setq 赋值结构：
-1. 对一个 package *内部使用* 的全局变量进行赋值：
+在一个 library 中，一般只能出现下面 *两种* setq 赋值结构：
+1. 对一个 library *内部使用* 的全局变量进行赋值：
    #+BEGIN_SRC emacs-lisp
    (defvar elptips--name "elptips-name"
      "Elptips's name.")
@@ -138,7 +139,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
 其他形式的 setq 赋值结构都是有问题的：
 
-1. 在 package 中对一个用户接口变量进行赋值
+1. 在 library 中对一个用户接口变量进行赋值
 
    #+BEGIN_SRC emacs-lisp
    (defcustom elptips-name "elptips-name"
@@ -148,9 +149,9 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
    这种做法是最应该避免的！！！
 
-   无论这个用户接口变量属于自己 package 还是其他 package，都不应该
+   无论这个用户接口变量属于自己 library 还是其他 library，都不应该
    这么做，因为它直接违反了 “尊重用户选择” 这个原则，在一定条件下，
-   加载 package 会覆盖用户的设置，比如：
+   加载 library 会覆盖用户的设置，比如：
 
    #+BEGIN_SRC emacs-lisp
    (setq elptips-name "elptips-name3")
@@ -171,7 +172,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    #+END_SRC
 
    我个人感觉，Emacs-lisp 给 setq 添加这个特性是为了编写 configure 时省事，
-   但编写 package 的时候，这样做有覆盖用户设置的风险。
+   但编写 library 的时候，这样做有覆盖用户设置的风险。
 
 3. 给一个没有定义的 *局部变量* 赋值
 
@@ -203,8 +204,8 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    #+END_SRC
 
 * 对变量赋值的再思考
-通过 “变量赋值的正确方式” 的讨论，我们可以发现，在编写 package 的
-时候，setq 最合理的使用方式只有 *一种* , 即：对 package 内部使用的
+通过 “变量赋值的正确方式” 的讨论，我们可以发现，在编写 library 的
+时候，setq 最合理的使用方式只有 *一种* , 即：对 library 内部使用的
 全局变量赋值：
 
 #+BEGIN_SRC emacs-lisp
@@ -217,9 +218,9 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 一定要确保这个局部变量已经在 let 结构中定义了。
 
 在其他情况使用 setq 可能就是滥用了，当然我这里只是说 *可能*, 只要你的
-使用方式遵循 package 编写原则，那也许就是合理的用法 :-)
+使用方式遵循 library 编写原则，那也许就是合理的用法 :-)
 * 如果必须设置用户接口变量，该怎么办？
-虽然 package 维护者不应该随意覆盖用户接口变量，但现实情况是：
+虽然 library 维护者不应该随意覆盖用户接口变量，但现实情况是：
 我们有时候必须这样做，理想很丰满，但现实却很骨感。。。
 
 这时候，我们就要退而求其次，遵循 "用户知情同意原则", 尽最大努力
@@ -228,7 +229,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 常见的方式有四种，但一般只建议使用前两种方式，后面两种方式是
  *黑科技*, 一定要谨慎使用，不合理的应用会让你遭到唾弃。
 
-1. 在 package 文档中指导用户自己设置
+1. 在 library 文档中指导用户自己设置
 
    这种方法是最稳妥可靠的，大多数情况下，我们只能使用这种方式。
 
@@ -241,8 +242,8 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
    在 let 定义的局部范围， pkgxxx-name 会被强制绑定到另外一个值，
    这个用法 *非常的常用* ，当满足下面两个条件时，就可以这么用。
-   1. package 所依赖的函数无法通过参数设置，只能通过全局变量来改变其行为。
-   2. 对这个全局变量局部绑定，不会对所依赖的 package 造成影响。
+   1. library 所依赖的函数无法通过参数设置，只能通过全局变量来改变其行为。
+   2. 对这个全局变量局部绑定，不会对所依赖的 library 造成影响。
 
    比如：
 
