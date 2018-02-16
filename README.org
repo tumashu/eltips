@@ -38,6 +38,10 @@ package.el 和 elpa 引入的，时间不是很长。
 单独的 library 文件，也可以是一组功能联系紧密的 library 文件打包
 生成的 zip 文件。
 
+具体细节请阅读 elisp info 中的 "Preparing Lisp code for distribution" 章节。
+
+https://www.gnu.org/software/emacs/manual/html_mono/elisp.html#Packaging-Basics
+
 * library 编写原则
 1. 成本效益原则：
    1. 编写的 library 不能含有恶意代码，不能窃取用户隐私。
