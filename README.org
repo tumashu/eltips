@@ -113,7 +113,24 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    (defvar elptips-name "elptips-name"
      "Elptips's name.")
    #+END_SRC
-2. 定义一个 library *内部使用* 的全局变量
+2. 定义一个只读全局变量
+   #+BEGIN_SRC emacs-lisp
+   (defconst elptips-name "elptips-name"
+     "Elptips's name")
+   #+END_SRC
+
+   值得注意的是，defconst 并不能保证这个变量完全只读，而不被修改
+   它只是告诉同学们，library 的维护者可能不会在代码里面重新设置
+   这个变量，至于真的会不会，只有天知道，所以这个操作符的功能和
+   下面的这段代码类似：
+
+   #+BEGIN_SRC emacs-lisp
+   (defvar elptips-name "elptips-name"
+     "Elptips's name.
+   Please note: this variable is used as const variable.")
+   #+END_SRC
+
+3. 定义一个 library *内部使用* 的全局变量
    #+BEGIN_SRC emacs-lisp
    (defvar elptips--name "elptips--name"
      "Elptips's name.")
@@ -122,7 +139,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    library 内部使用的全局变量，用户不应该使用它，library 的维护者可以
    随意添加，删除一个内部全局变量，可以对一个内部全局变量任意赋值，
    更重要的是 library 维护者不需要维护内部全局变量的向后兼容性。
-3. 定义一个局部变量
+4. 定义一个局部变量
    #+BEGIN_SRC emacs-lisp
    (let ((a 1)
          (b 2)
