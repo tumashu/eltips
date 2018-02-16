@@ -1,4 +1,4 @@
-#+TITLE: Emacs-lisp Packaging Tips
+#+TITLE: Emacs-lisp Primary Tips
 
 * Configure vs library
 从 Emacs-lisp 语言角度来说，两者没有多大的区别，可能写 library 的时候，
