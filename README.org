@@ -7,6 +7,12 @@
               ---- 天然二呆拍脑门后说
 #+END_VERSE
 
+读这个文档之前，同学们需要知道，所有的示例代码
+都有两个前提：
+
+1. 当前 library 或者 package 的名称为： eltips
+2. eltips 依赖的一个 library: pkgxxx
+
 * Configure vs library
 从 Emacs-lisp 语言角度来说，两者没有多大的区别，可能写 library 的时候，
 Emacs-lisp 语言应用的更加规范一点。
@@ -102,7 +108,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 1. 定义一个用户接口变量
    #+BEGIN_SRC emacs-lisp
    (defcustom eltips-name "eltips-name"
-     "Eltips's name.")
+     "The name of elptips.")
    #+END_SRC
 
    这是最正统的方式，但许多人嫌麻烦，最开始都使用下面的方式
@@ -111,7 +117,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
    #+BEGIN_SRC emacs-lisp
    (defvar eltips-name "eltips-name"
-     "Eltips's name.")
+     "The name of elptips.")
    #+END_SRC
 2. 定义一个只读全局变量
    #+BEGIN_SRC emacs-lisp
@@ -126,14 +132,14 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
    #+BEGIN_SRC emacs-lisp
    (defvar eltips-name "eltips-name"
-     "Eltips's name.
+     "The name of elptips.
    Please note: this variable is used as const variable.")
    #+END_SRC
 
 3. 定义一个 library *内部使用* 的全局变量
    #+BEGIN_SRC emacs-lisp
    (defvar eltips--name "eltips--name"
-     "Eltips's name.")
+     "The name of elptips.")
    #+END_SRC
    注：Lisp 有一个惯例：使用前缀加 ~--~ 来表示这个全局变量是
    library 内部使用的全局变量，用户不应该使用它，library 的维护者可以
@@ -164,7 +170,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 1. 对一个 library *内部使用* 的全局变量进行赋值：
    #+BEGIN_SRC emacs-lisp
    (defvar eltips--name "eltips-name"
-     "Eltips's name.")
+     "The name of elptips.")
    (setq eltips--name "eltips-name2")
    #+END_SRC
 2. 对一个局部变量进行赋值：
@@ -181,7 +187,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
    #+BEGIN_SRC emacs-lisp
    (defcustom eltips-name "eltips-name"
-     "Eltips's name.")
+     "The name of elptips.")
    (setq eltips-name "eltips-name2")
    #+END_SRC
 
@@ -248,7 +254,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 
 #+BEGIN_SRC emacs-lisp
 (defvar eltips--name "eltips-name"
-  "Eltips's name.")
+  "The name of elptips.")
 (setq eltips--name "eltips-name2")
 #+END_SRC
 
