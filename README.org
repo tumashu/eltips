@@ -86,7 +86,24 @@ Emacs-lisp 语言本身对 library 的名称没有多少限制，但并不代表
 最好的选择是：package 的名字就选 library 的名字。
 
 * 选择合适的协议
-TODO
+这个需要早做决定，package 的维护者可以按照自己的喜好选择一个开源协议，
+但最常用的是： “GNU General Public License” , 如果你想你的 package
+加入 elpa, 那么你只能选择 GPL :-)
+
+#+BEGIN_EXAMPLE
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#+END_EXAMPLE
 * 选择合适的发布方式
 到目前为止，最常见的发布途径有两种：
 
