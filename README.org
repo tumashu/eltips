@@ -467,6 +467,100 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
     git pull
     #+END_EXAMPLE
 
+* 如何把自己的 package 提交到 Elpa
+Elpa 是 Emacs 官方的 package 仓库，所以把一个 package 提交到 elpa,
+相对来说复杂罗嗦一点：
+
+1. package 代码的主要供献者，需要签署 GNU 纸质协议，一般需要自己下载
+   并打印 pdf 格式的协议文件，然后签上自己的名字，并用邮件的方式邮寄到
+   指定的地址，这个工作大概需要20天左右，什么是 “主要供献者”，GNU 有具体
+   规定，一般是按代码的行数来确定。
+2. package 代码的质量要求稍微高一点，package 的代码会在 emacs-devel 上
+   经过 emacs 大牛们的评价，不过有时候简单的 package, 大牛们也懒得评价 :-)
+3. Elpa 是直接把 package 的代码提交到 elpa.git, 而不是和 Melpa 一样，
+   只提交一个 package 描述，所以操作过程稍微罗嗦一点。
+
+但将 package 提交到 elpa 也有不可比拟的优势：elpa 是 emacs 的官方 package 仓库，
+属于亲儿子，你懂得。。。。
+
+
+将 package 提交到 elpa 之前，你首先需要规划 package 未来的开发流程，
+你需要做下面几个决定：
+
+1. 怎么维护 package
+   1. 使用 elpa.git 做为唯一的代码仓库。
+   2. 使用独立 package 仓库，定期和 elpa.git 同步。
+2. 如何提交 package
+   1. 自己提交：这个需要用户获取 elpa.git 的推送权限。
+   2. 别人代劳：这个不需要 elpa.git 的推送权限，只需要将代码 patch
+      发送到 emacs-devel 上，请 elpa.git 的管理员代为推送就可以了。
+
+注意：“别人代劳” 模式只适用于 “以 elpa.git 做为 package 的唯一维护仓库”
+这种开发模式，这种开发模式最简单，但用的人不是很多，大多数 package 维护者
+都会向 elpa 管理员申请 elpa.git 推送权限，自己推送提交。
+
+我在下面只介绍：“package 使用独立仓库，定期和 elpa.git 合并，并自己
+提交代码” 这个流程。
+
+1. 在 http://savannah.gnu.org/ 上注册一个帐户，比如： tumashu
+2. 登录后，上传 ssh 公钥，（必须的，不然以后无法推送代码）
+   #+BEGIN_EXAMPLE
+   登录 savannah.gnu.org -> 点击 [ My Account Conf ] 链接
+                         -> 点击 [ Authentication Setup ] 链接
+                         -> 点击 [ Edit the 2 SSH Public Keys registered ] 链接
+                         -> 按页面上的具体说明操作
+   #+END_EXAMPLE
+
+   注：公钥生效需要1个小时，请耐心等待。。。。
+
+3. 给 emacs-devel 发一份邮件，主题为：[ELPA] New package: <pkg-name>,
+   邮件正文中介绍一下你的 package，并说明 package 代码的位置，具体细节请
+   参考 [[http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/README][elpa README]] 中的 "Notify emacs-devel@gnu.org" 章节。
+4. 接受大牛们的 review, 这个过程一般需要2-7天时间。
+5. 按照大牛们提出的意见和建议更改代码，一直更改到大牛们认为你的 package 适合
+   加入 elpa. 这个过程难度不大，就是比较繁琐，不过也有直接被 KO 的可能。。。
+6. 如果 Emacs 的开发者或者 elpa.git 的维护者认为你的 package 已经 OK 了，
+   你就可以申请 elpa.git 的推送权限了：
+   #+BEGIN_EXAMPLE
+   登录 savannah.gnu.org -> 点击 [ My Groups ] 链接
+                         -> 点击 [ Request for Inclusion ] 链接
+                         -> 搜索 emacs 并钩选
+                         -> 写 comment, 要说明你是哪个 package 的维护者
+                         -> 点击 [ request inclusion ] 按钮
+                         -> 等待 elpa.git 管理员授权 (Request for Inclusion Waiting For Approval)
+   #+END_EXAMPLE
+7. 抓取 elpa.git
+
+   确定当前帐号已经加入 emacs 组后，
+
+   #+BEGIN_EXAMPLE
+   登录 savannah.gnu.org -> 点击 [ My Groups ] 链接
+                         -> [ Groups I'm Contributor of ] 包含 emacs
+   #+END_EXAMPLE
+
+   你就可以抓取 elpa.git 了。
+
+   #+BEGIN_EXAMPLE
+   cd ~/projects/
+   git clone tumashu@git.sv.gnu.org:/srv/git/emacs/elpa.git
+   #+END_EXAMPLE
+
+   注：可以访问 https://savannah.gnu.org/git/?group=emacs ,
+   来获取 member 抓取地址，千万不能搞错这个地址，不然以后就没法
+   git push 操作了，切记切记。。。。
+
+8. 仔细阅读 [[http://git.savannah.gnu.org/cgit/emacs/elpa.git/plain/README][elpa README]] , 然后按照上面描述的流程提交代码就可以了，
+   这里只做一些说明：
+   1. 你现在已经拥有 elpa.git 的推送权限了，做事千万别随意马虎。
+   2. 禁用 git rebase -i 之类的更改 git 历史的命令，否则，全世界的
+      emacser 都可能会唾弃你。。。。
+   3. 虽然 README 推荐 subtree, 但有些大牛觉得 externals 更靠谱，
+      估计智能看自己的喜好了，但值得注意的是： 如果已经使用 subtree 或者
+      externals 来同步，就千万别在使用 git format-patch 了，会有意想不到
+      的后果。
+   4. 编辑 elpa/externals-list 文件，添加自己 package 的信息，按字母顺序排序。
+   5. 如果遇到问题，勤问 emacs-devel, 别自以为是。。。。
+
 * 未完待续。。。
 * 尾注
 
