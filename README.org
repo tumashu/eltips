@@ -428,7 +428,44 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 我的建议是：代码提交之前，都应该用这些工具检查一遍，
 去除所有的警告和错误后再提交，如果检查的频率太低，
 可能你就没有动力做这个事情了。
+* 如何把自己的 package 提交到 Melpa
+这里以 github 为例：
 
+1. 注册一个 github 帐号，比如：tumashu
+2. 用注册的帐号登录 github
+3. 进入 [[https://github.com/melpa/melpa][Melpa]] 的 github 页面
+4. 点击 Fork 按钮, 在 tumashu 的帐号下得到一个 melpa 代码仓库的镜像。
+5. 抓取 Melpa 官方仓库
+   #+BEGIN_EXAMPLE
+   cd ~/projects/
+   git clone https://github.com/melpa/melpa.git
+   #+END_EXAMPLE
+6. 添加 melpa 镜像仓库（Fork 得到的仓库）的地址
+   #+BEGIN_EXAMPLE
+   git remote add my-melpa https://github.com/tumashu/melpa.git
+   #+END_EXAMPLE
+7. 更新工作目录（很重要的工作）
+   #+BEGIN_EXAMPLE
+   git reset --hard ORIG_HEAD
+   git pull
+   #+END_EXAMPLE
+8. 在 recipes 目录下添加 recipe 文件，并 commit 你的更改，
+   recipe 文件的格式请参考： [[https://github.com/melpa/melpa/blob/master/README.md][Melpa README]]
+9. 将更改推送到镜像仓库，这里一定要使用 *强制推送*
+   #+BEGIN_EXAMPLE
+   git push -f my-melpa master
+   #+END_EXAMPLE
+10. 然后给 melpa 官方仓库提交一个 pull request
+11. 等待这个 pull request 合并，一般需要1周时间，在这个过程中，
+    melpa 维护者会对 package 的代码做出相应的评价，你需要：
+    1. 按照要求更改
+    2. 说明理由，如果你的理由合理充分，Melpa 维护者会同意的。
+12. Pull request 合并后大约 4 个小时，你的 package 就会出现在 melpa 中。
+13. 更新工作目录（很重要的工作）
+    #+BEGIN_EXAMPLE
+    git reset --hard ORIG_HEAD
+    git pull
+    #+END_EXAMPLE
 
 * 未完待续。。。
 * 尾注
