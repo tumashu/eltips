@@ -79,7 +79,8 @@ Emacs-lisp 语言本身对 library 的名称没有多少限制，但并不代表
    1. 最好是 *一个* 单词或者 *一个* 缩写，比如：company 或者 elpa 。
    2. 最好不要超过2个单词。
    3. 不要太长， *个人感觉* 最好不超过15个字符。
-4. library 的前缀最好使用 library 名称加连字符。
+4. library 的名字中，最好不要包含太常见的单词，比如：emacs, chinese, good 之类的。
+5. library 的前缀最好使用 library 名称加连字符。
 
 * package 命名
 最好的选择是：package 的名字就选 library 的名字。
