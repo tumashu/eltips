@@ -463,7 +463,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
    #+END_EXAMPLE
 7. 更新工作目录（很重要的工作）
    #+BEGIN_EXAMPLE
-   git reset --hard ORIG_HEAD
+   git reset --hard origin
    git pull
    #+END_EXAMPLE
 8. 在 recipes 目录下添加 recipe 文件，并 commit 你的更改，
@@ -480,7 +480,7 @@ Emacs-lisp 有许多定义变量的方法，但下面几种是最最常用的。
 12. Pull request 合并后大约 4 个小时，你的 package 就会出现在 melpa 中。
 13. 更新工作目录（很重要的工作）
     #+BEGIN_EXAMPLE
-    git reset --hard ORIG_HEAD
+    git reset --hard origin
     git pull
     #+END_EXAMPLE
 
